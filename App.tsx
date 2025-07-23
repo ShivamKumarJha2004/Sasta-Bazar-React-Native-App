@@ -10,23 +10,17 @@ import HomeScreen from '@components/pages/HomeScreen';
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import Navigation from '@navigation/Navigation';
-import { Provider } from 'react-redux';
-import { store } from '@store/store';
+
 
 const App = () => {
   return (
-    <Provider store={store}>
-
-      <Navigation />
-    </Provider>
-
+    <Navigation />
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f7fa',
     justifyContent: 'center',
     alignItems: 'center',
   },
