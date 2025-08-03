@@ -18,12 +18,29 @@ const Main_Navigator = () => {
     screenOptions={{
         headerShown:false,
         tabBarHideOnKeyboard:true,
-        tabBarActiveTintColor:Colors.active,
-        tabBarInactiveTintColor:Colors.inactive,
+        tabBarActiveTintColor:'#FF8C00',
+        tabBarInactiveTintColor:'#666',
         lazy:true,
 
         tabBarStyle:{
-            paddingTop: Platform.OS === 'android' ? 0 : 10
+            paddingTop: Platform.OS === 'android' ? 0 : 10,
+            height: 65,
+            borderTopWidth: 0,
+            elevation: 12,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: -4 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            backgroundColor: '#FFFFFF',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            position: 'absolute',
+            paddingBottom: 10
+        },
+        tabBarLabelStyle: {
+            fontSize: 12,
+            fontWeight: '500',
+            paddingBottom: 5
         }
     }}
     >
@@ -79,9 +96,11 @@ const Main_Navigator = () => {
             fontSize: 12,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'red', // or your preferred color
-            color: 'white',         // for the text
-            paddingHorizontal: 4,   // for extra space for double digits
+            backgroundColor: '#FF4500',
+            color: 'white',
+            paddingHorizontal: 4,
+            fontWeight: 'bold',
+            transform: [{translateY: -5}, {translateX: 5}]
           }
         }}  
 

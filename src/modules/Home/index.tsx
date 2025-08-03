@@ -3,101 +3,32 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MenuBar from './molecules/MenuBar';
-import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming, Easing } from 'react-native-reanimated';
-import { screenHeight } from '../../../utils/Constants';
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming, Easing } from 'react-native-reanimated';
+import Searchbar from '../Home/molecules/searchBar';
+import MainList from '@components/templates/mainList';
 
 const Home = () => {
-  const insets=useSafeAreaInsets()
-  const scrollYGlobally=useSharedValue(0)
   const opacity = useSharedValue(0)
-  const scale = useSharedValue(0.8)
-
-  const moveStyle = useAnimatedStyle(() => {
-    const translateY=interpolate(
-      scrollYGlobally.value,
-      [0,100],
-      [0,-100],
-      'clamp'
-    )
-    return {
-      transform:[
-        {translateY:translateY},
-        {scale: interpolate(scrollYGlobally.value, [0, 50], [1, 0.95], 'clamp')}
-      ],
-      opacity: interpolate(scrollYGlobally.value, [0, 100], [1, 0.8], 'clamp')
-    }
-  })
   
   const fadeInStyle = useAnimatedStyle(() => {
     return {
-      opacity: opacity.value,
-      transform: [
-        {scale: scale.value}
-      ]
+      opacity: opacity.value
     }
   })
 
-  const [todoData, setTodoData] = useState({
-    title: '',
-    completed: false,
-    userId: 0,
-    id: 0,
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string|null>(null);
   
-    const getData=async()=>{
-      try{
-        const resposne=await axios.get('https://jsonplaceholder.typicode.com/todos/2')
-        setTodoData(resposne.data)
-        setLoading(false);
-        setError(null);
-      }catch(error){
-        setError(error instanceof Error ? error.message :'An error occurred')
-      }
-    }
     
-
-   useEffect(() => {
-    getData()
-    
-    // Animate elements when component mounts
-    opacity.value = withTiming(1, { duration: 1000 })
-    scale.value = withSpring(1, { damping: 12, stiffness: 90 })
-    
-    // Simulate scroll for animation demo
-    setTimeout(() => {
-      scrollYGlobally.value = withTiming(50, { duration: 1500, easing: Easing.out(Easing.exp) })
-    }, 2000)
-   }, []);
-  
+   
   return (
     <View style={styles.container}>
-      <Animated.View style={[moveStyle, styles.menuBarContainer]}>
-        <MenuBar scrollY={scrollYGlobally}/>
-      </Animated.View>
+      <View style={styles.menuBarContainer}>
+        <MenuBar />
+        <Searchbar />
+        <MainList  />
+      </View>
       
-      <Animated.View style={[moveStyle,  {height:screenHeight}]}>
-       
-      </Animated.View>
       
-      {loading ? (
-        <Animated.View style={[styles.loadingContainer, fadeInStyle]}>
-          <ActivityIndicator size="large" color="#e65100" />
-          <Text style={styles.loadingText}>Loading...</Text>
-        </Animated.View>
-      ) : error ? (
-        <Animated.View style={[styles.errorContainer, fadeInStyle]}>
-          <Text style={styles.errorText}>{error}</Text>
-        </Animated.View>
-      ) : (
-        <Animated.View style={[styles.card, fadeInStyle]}>
-          <Text style={styles.todoTitle}>{todoData.title}</Text>
-          <Text style={styles.todoStatus}>
-            Status: {todoData.completed ? 'Completed' : 'Pending'}
-          </Text>
-        </Animated.View>
-      )}
+      
     </View>
   );
 };
@@ -105,20 +36,14 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fffde7',
     alignItems: 'center',
-    // paddingBottom: 24,
-    // paddingHorizontal: 10,
   },
   menuBarContainer: {
     width: '100%',
     paddingHorizontal: 10,
     zIndex: 10,
     marginTop: 10,
-    shadowColor: '#FFC201',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.1,
-    shadowRadius: 15,
+    marginBottom: 10,
   },
   welcome: {
     fontSize: 28,

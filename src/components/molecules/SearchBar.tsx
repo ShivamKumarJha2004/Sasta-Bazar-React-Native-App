@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 // import Icon from '../atoms/Icon'; // Uncomment if you have an Icon atom
 
-const SearchBar = ({ value, onChange }) => (
+const SearchBar = ({ value, onChange }: { value: string; onChange: (text: string) => void }) => (
   <View style={styles.container}>
     {/* <Icon name="search" /> */}
     <TextInput
