@@ -11,7 +11,9 @@
     "postinstall": "npx patch-package",
     "link-fonts": "npx react-native-asset",
     "pod-install": "cd android && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install",
-    "create-apk": "cd android && ./gradlew assembleRelease"
+    "create-apk": "cd android && .\\gradlew assembleRelease",
+    "fix-codegen": "node fix-codegen.js",
+    "build-debug-apk": "npm run fix-codegen && cd android && .\\gradlew assembleDebug"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.80.1",
